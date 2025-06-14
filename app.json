@@ -24,6 +24,13 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "fonts": [
+      "./assets/fonts/HelloValentica-Regular.ttf",
+      "./assets/fonts/HelloValentica-Bold.ttf"
+    ],
+    "plugins": [
+      "expo-font"
+    ]
   }
 }
