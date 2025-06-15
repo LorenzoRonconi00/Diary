@@ -10,6 +10,7 @@ import HomeScreen from './src/screens/HomeScreen';
 import DiaryScreen from './src/screens/DiaryScreen';
 import EditorScreen from './src/screens/EditorScreen';
 import { RootStackParamList } from './src/types';
+import AlbumDetailScreen from './src/screens/AlbumDetailScreen';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -56,6 +57,7 @@ export default function App(): JSX.Element {
         >
           <Stack.Screen name="Login" component={LoginScreen} />
           <Stack.Screen name="Home" component={HomeScreen} />
+          <Stack.Screen name="AlbumDetail" component={AlbumDetailScreen} />
           <Stack.Screen name="Diary" component={DiaryScreen} />
           <Stack.Screen name="Editor" component={EditorScreen} />
         </Stack.Navigator>
