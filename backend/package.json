@@ -2,7 +2,7 @@
   "name": "diario-backend",
   "scripts": {
     "build": "tsc",
-    "start": "node dist/server.js",
+    "start": "node dist/src/server.js",
     "dev": "ts-node-dev src/server.ts",
     "clean": "rm -rf dist"
   },
