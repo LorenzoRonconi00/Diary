@@ -30,12 +30,12 @@ interface SpotifySearchResponse {
 let cachedToken: string | null = null;
 let tokenExpiry: number | null = null;
 
-// ✨ CORRETTA: Funzione per ottenere il token (come nel tuo Python)
+// ✨ CORRETTA: Funzione per ottenere il token
 async function getSpotifyToken(): Promise<string> {
   // Controlla se il token è ancora valido
   if (cachedToken && tokenExpiry && Date.now() < tokenExpiry) {
     console.log('🔄 Using cached Spotify token');
-    return cachedToken;
+    return cachedToken; // ✅ CORRETTO: qui cachedToken non può essere null
   }
 
   const clientId = process.env.SPOTIFY_CLIENT_ID;
@@ -76,7 +76,7 @@ async function getSpotifyToken(): Promise<string> {
     cachedToken = response.data.access_token;
     tokenExpiry = Date.now() + (response.data.expires_in * 1000) - 60000; // 1 minuto di buffer
 
-    return cachedToken;
+    return cachedToken!; // ✅ CORRETTO: qui cachedToken è appena stato assegnato
   } catch (error) {
     if (typeof error === 'object' && error !== null && 'response' in error) {
       console.error('❌ Spotify token error:', (error as any).response?.data || (error as any).message);
