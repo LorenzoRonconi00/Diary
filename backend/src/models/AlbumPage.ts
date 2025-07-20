@@ -8,7 +8,7 @@ export interface IAlbumPageDocument extends Document<Types.ObjectId>, IAlbumPage
 const pageContentSchema: Schema<IPageContent> = new Schema({
   type: {
     type: String,
-    enum: ['text', 'image'],
+    enum: ['text', 'image', 'spotify', 'sticker'],
     required: true
   },
   content: {
@@ -18,6 +18,37 @@ const pageContentSchema: Schema<IPageContent> = new Schema({
   position: {
     x: { type: Number, default: 0 },
     y: { type: Number, default: 0 }
+  },
+
+  size: {
+    width: { type: Number, default: 150 },
+    height: { type: Number, default: 150 }
+  },
+  rotation: {
+    type: Number,
+    default: 0
+  },
+  zIndex: {
+    type: Number,
+    default: 1
+  },
+  fontSize: {
+    type: Number,
+    default: undefined
+  },
+  spotifyData: {
+    trackId: { type: String },
+    trackName: { type: String },
+    artistName: { type: String },
+    albumName: { type: String },
+    imageUrl: { type: String },
+    previewUrl: { type: String }
+  },
+  stickerData: {
+    giphyId: { type: String },
+    title: { type: String },
+    originalUrl: { type: String },
+    smallUrl: { type: String }
   }
 }, { _id: false });
 
@@ -37,7 +68,6 @@ const albumPageSchema: Schema<IAlbumPageDocument> = new Schema({
   timestamps: true
 });
 
-// Index per prestazioni migliori
 albumPageSchema.index({ albumId: 1, pageNumber: 1 }, { unique: true });
 
 export default mongoose.model<IAlbumPageDocument>('AlbumPage', albumPageSchema);

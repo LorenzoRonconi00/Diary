@@ -237,7 +237,6 @@ const HomeScreen: React.FC<Props> = ({ navigation, route }) => {
         {/* TITLE ROW */}
         <View style={styles.titleRow}>
           <Text style={styles.title}>Ciao, {user.name}! {user.name === 'Ilaria' ? '🌻' : '🧸'}</Text>
-          {/* ✨ MODIFICATO: OnPress apre popup profilo */}
           <TouchableOpacity
             style={styles.profileAvatar}
             onPress={() => setShowProfileModal(true)}
@@ -303,7 +302,6 @@ const HomeScreen: React.FC<Props> = ({ navigation, route }) => {
           </View>
         </View>
 
-        {/* ALBUMS - ✨ RIMOSSO il bottone logout da qui */}
         <View style={styles.albumContainer}>
           <View style={styles.addAlbumRow}>
             <Text style={styles.addAlbumText}>Gli album</Text>
@@ -361,7 +359,6 @@ const HomeScreen: React.FC<Props> = ({ navigation, route }) => {
         </View>
       </View>
 
-      {/* ✨ NUOVO: Modal profilo con bottone logout */}
       <Modal
         visible={showProfileModal}
         transparent={true}
@@ -531,7 +528,7 @@ const styles = StyleSheet.create({
     gap: 10,
   },
   titleRow: {
-    flex: 0.1,
+    flex: 0.15,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -652,8 +649,8 @@ const styles = StyleSheet.create({
   },
   scotchImage: {
     position: 'absolute',
-    bottom: 10,
-    left: 10,
+    bottom: -10,
+    left: -20,
     width: 40,
     height: 40,
     opacity: 0.7,
@@ -726,7 +723,7 @@ const styles = StyleSheet.create({
   albumBackground: {
     width: '100%',
     height: '100%',
-    position: 'absolute',
+    resizeMode: 'contain',
   },
   polaroidContainer: {
     position: 'absolute',

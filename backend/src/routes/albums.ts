@@ -11,7 +11,7 @@ router.get('/', async (req: Request, res: Response<AlbumResponse[]>) => {
     const albums: IAlbumDocument[] = await Album.find()
       .sort({ createdAt: -1 })
       .limit(50);
-    
+
     const albumsResponse: AlbumResponse[] = albums.map(album => ({
       _id: album._id.toString(),
       name: album.name,
@@ -20,7 +20,7 @@ router.get('/', async (req: Request, res: Response<AlbumResponse[]>) => {
       createdAt: album.createdAt,
       updatedAt: album.updatedAt
     }));
-    
+
     res.json(albumsResponse);
   } catch (error) {
     console.error('Get albums error:', error);
@@ -32,23 +32,23 @@ router.get('/', async (req: Request, res: Response<AlbumResponse[]>) => {
 router.post('/', async (req: Request<{}, AlbumResponse | { error: string }, Omit<IAlbum, '_id' | 'createdAt' | 'updatedAt' | 'totalPages'>>, res: Response<AlbumResponse | { error: string }>) => {
   try {
     const { name, coverImage } = req.body;
-    
+
     if (!name || !coverImage) {
       return res.status(400).json({ error: 'Nome e immagine sono richiesti' });
     }
-    
+
     if (name.trim().length === 0) {
       return res.status(400).json({ error: 'Il nome non può essere vuoto' });
     }
-    
+
     const album = new Album({
       name: name.trim(),
       coverImage,
       totalPages: 0 // Inizialmente nessuna pagina
     });
-    
+
     const savedAlbum: IAlbumDocument = await album.save();
-    
+
     const albumResponse: AlbumResponse = {
       _id: savedAlbum._id.toString(),
       name: savedAlbum.name,
@@ -57,7 +57,7 @@ router.post('/', async (req: Request<{}, AlbumResponse | { error: string }, Omit
       createdAt: savedAlbum.createdAt,
       updatedAt: savedAlbum.updatedAt
     };
-    
+
     res.status(201).json(albumResponse);
   } catch (error) {
     console.error('Create album error:', error);
@@ -69,10 +69,10 @@ router.post('/', async (req: Request<{}, AlbumResponse | { error: string }, Omit
 router.get('/:id/pages', async (req: Request<{ id: string }>, res: Response<AlbumPageResponse[]>) => {
   try {
     const { id } = req.params;
-    
+
     const pages: IAlbumPageDocument[] = await AlbumPage.find({ albumId: id })
       .sort({ pageNumber: 1 });
-    
+
     const pagesResponse: AlbumPageResponse[] = pages.map(page => ({
       _id: page._id.toString(),
       albumId: page.albumId.toString(),
@@ -81,7 +81,7 @@ router.get('/:id/pages', async (req: Request<{ id: string }>, res: Response<Albu
       createdAt: page.createdAt,
       updatedAt: page.updatedAt
     }));
-    
+
     res.json(pagesResponse);
   } catch (error) {
     console.error('Get album pages error:', error);
@@ -94,29 +94,29 @@ router.post('/:id/pages', async (req: Request<{ id: string }>, res: Response<Alb
   try {
     const { id } = req.params;
     const { contents = [] } = req.body;
-    
+
     // Trova l'album
     const album = await Album.findById(id);
     if (!album) {
       return res.status(404).json({ error: 'Album non trovato' });
     }
-    
+
     // Calcola il numero della nuova pagina
     const nextPageNumber = album.totalPages + 1;
-    
+
     // Crea la nuova pagina
     const newPage = new AlbumPage({
       albumId: id,
       pageNumber: nextPageNumber,
       contents
     });
-    
+
     const savedPage = await newPage.save();
-    
+
     // Aggiorna il conteggio delle pagine nell'album
     album.totalPages = nextPageNumber;
     await album.save();
-    
+
     const pageResponse: AlbumPageResponse = {
       _id: savedPage._id.toString(),
       albumId: savedPage.albumId.toString(),
@@ -125,7 +125,7 @@ router.post('/:id/pages', async (req: Request<{ id: string }>, res: Response<Alb
       createdAt: savedPage.createdAt,
       updatedAt: savedPage.updatedAt
     };
-    
+
     res.status(201).json(pageResponse);
   } catch (error) {
     console.error('Create album page error:', error);
@@ -137,16 +137,16 @@ router.post('/:id/pages', async (req: Request<{ id: string }>, res: Response<Alb
 router.delete('/:id', async (req: Request<{ id: string }>, res: Response<{ success: boolean; error?: string }>) => {
   try {
     const { id } = req.params;
-    
+
     // Elimina tutte le pagine dell'album
     await AlbumPage.deleteMany({ albumId: id });
-    
+
     // Elimina l'album
     const result = await Album.findByIdAndDelete(id);
     if (!result) {
       return res.status(404).json({ success: false, error: 'Album non trovato' });
     }
-    
+
     res.json({ success: true });
   } catch (error) {
     console.error('Delete album error:', error);
@@ -159,17 +159,23 @@ router.put('/:albumId/pages/:pageId', async (req: Request<{ albumId: string; pag
   try {
     const { albumId, pageId } = req.params;
     const { contents = [] } = req.body;
-    
+
+    // DEBUG: Log dei contenuti ricevuti
+    console.log('Updating page with contents:', JSON.stringify(contents, null, 2));
+
     const page = await AlbumPage.findOneAndUpdate(
       { _id: pageId, albumId },
       { contents },
       { new: true }
     );
-    
+
     if (!page) {
       return res.status(404).json({ error: 'Pagina non trovata' });
     }
-    
+
+    // DEBUG: Log della pagina salvata
+    console.log('Page saved successfully:', JSON.stringify(page.contents, null, 2));
+
     const pageResponse: AlbumPageResponse = {
       _id: page._id.toString(),
       albumId: page.albumId.toString(),
@@ -178,7 +184,7 @@ router.put('/:albumId/pages/:pageId', async (req: Request<{ albumId: string; pag
       createdAt: page.createdAt,
       updatedAt: page.updatedAt
     };
-    
+
     res.json(pageResponse);
   } catch (error) {
     console.error('Update album page error:', error);

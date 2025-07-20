@@ -44,11 +44,51 @@ export interface Album {
 
 // ✨ NUOVO: Interface per Album Page Content (per uso futuro)
 export interface PageContent {
-  type: 'text' | 'image';
+  type: 'text' | 'image' | 'spotify' | 'sticker';
   content: string;
-  position?: {
-    x: number;
-    y: number;
+  position?: { x: number; y: number };
+  size?: { width: number; height: number };
+  rotation?: number;
+  zIndex?: number;
+  fontSize?: number;
+  spotifyData?: {
+    trackId: string;
+    trackName: string;
+    artistName: string;
+    albumName: string;
+    imageUrl: string;
+    previewUrl?: string;
+  };
+  stickerData?: {
+    giphyId: string;
+    title: string;
+    originalUrl: string;
+    smallUrl: string;
+  };
+}
+
+export interface PositionedElement {
+  id: string;
+  type: 'text' | 'image' | 'spotify' | 'sticker';
+  content: string;
+  position: { x: number; y: number };
+  size: { width: number; height: number };
+  rotation?: number;
+  zIndex?: number;
+  fontSize?: number;
+  spotifyData?: {
+    trackId: string;
+    trackName: string;
+    artistName: string;
+    albumName: string;
+    imageUrl: string;
+    previewUrl?: string;
+  };
+  stickerData?: {
+    giphyId: string;
+    title: string;
+    originalUrl: string;
+    smallUrl: string;
   };
 }
 

@@ -37,15 +37,35 @@ export interface ITodo {
 
 // ✨ Interface per Album Page Content
 export interface IPageContent {
-  type: 'text' | 'image';
-  content: string; // Testo o URL/base64 immagine
+  type: 'text' | 'image' | 'spotify';
+  content: string;
   position?: {
     x: number;
     y: number;
   };
+  size?: {
+    width: number;
+    height: number;
+  };
+  rotation?: number;
+  zIndex?: number;
+  fontSize?: number;
+  spotifyData?: {
+    trackId: string;
+    trackName: string;
+    artistName: string;
+    albumName: string;
+    imageUrl: string;
+    previewUrl?: string;
+  };
+  stickerData?: {
+    giphyId: string;
+    title: string;
+    originalUrl: string;
+    smallUrl: string;
+  };
 }
 
-// ✨ Interface per Album Page (backend - con ObjectId)
 export interface IAlbumPage {
   albumId: Types.ObjectId;
   pageNumber: number;
@@ -54,16 +74,16 @@ export interface IAlbumPage {
   updatedAt?: Date;
 }
 
-// ✨ Interface per Album
+
 export interface IAlbum {
   name: string;
-  coverImage: string; // URL o base64 dell'immagine di copertina
-  totalPages: number; // Numero totale di pagine
+  coverImage: string;
+  totalPages: number;
   createdAt?: Date;
   updatedAt?: Date;
 }
 
-// API Types (con _id come string per il frontend)
+
 export interface UserResponse extends IUser {
   _id: string;
 }
@@ -76,10 +96,10 @@ export interface TodoResponse extends ITodo {
   _id: string;
 }
 
-// ✨ CORRETTO: Response type per Album Page (separato dall'interface backend)
+
 export interface AlbumPageResponse {
   _id: string;
-  albumId: string; // ← STRING per il frontend, non ObjectId
+  albumId: string;
   pageNumber: number;
   contents: IPageContent[];
   createdAt?: Date;
