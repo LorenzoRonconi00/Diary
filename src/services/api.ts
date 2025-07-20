@@ -7,13 +7,7 @@ const getApiBaseUrl = (): string => {
     return 'http://192.168.1.13:3000/api';
   }
 
-  const releaseChannel = Constants.manifest?.releaseChannel;
-
-  if (releaseChannel === 'staging') {
-    return 'https://your-staging-api.railway.app/api';
-  }
-
-  return 'https://your-production-api.railway.app/api';
+  return 'https://diary-backend-c2tw.onrender.com/api';
 };
 
 const API_BASE_URL = getApiBaseUrl();
