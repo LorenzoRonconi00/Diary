@@ -19,7 +19,6 @@ app.use(cors());
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ limit: '10mb', extended: true }));
 
-
 const mongoUri = process.env.MONGODB_URI;
 if (!mongoUri) {
   console.error('MONGODB_URI non trovato nel file .env');
@@ -33,7 +32,6 @@ mongoose.connect(mongoUri)
   process.exit(1);
 });
 
-
 app.use('/api/auth', authRoutes);
 app.use('/api/entries', entriesRoutes);
 app.use('/api/todos', todosRoutes);
@@ -41,12 +39,17 @@ app.use('/api/albums', albumsRoutes);
 app.use('/api/spotify', spotifyRoutes);
 app.use('/api/giphy', giphyRoutes);
 
-
 app.get('/health', (req, res) => {
   res.json({ status: 'OK', timestamp: new Date().toISOString() });
 });
 
-app.listen(PORT, '0.0.0.0', () => {
+// Bind to 0.0.0.0 for production deployment
+const host = process.env.NODE_ENV === 'production' ? '0.0.0.0' : '0.0.0.0';
+
+app.listen(PORT, host, () => {
   console.log(`🚀 Server TypeScript running su porta ${PORT}`);
-  console.log(`📱 Accessibile da iPhone: http://192.168.1.13:${PORT}`);
+  console.log(`🌍 Environment: ${process.env.NODE_ENV || 'development'}`);
+  if (process.env.NODE_ENV !== 'production') {
+    console.log(`📱 Accessibile da iPhone: http://192.168.1.13:${PORT}`);
+  }
 });
