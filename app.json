@@ -12,15 +12,32 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.lorenzo.diary.2025",
+      "buildNumber": "1",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "614e74c3-e149-44a9-bd83-25229991adb6"
+      }
+    },
+    "updates": {
+      "url": "https://u.expo.dev/614e74c3-e149-44a9-bd83-25229991adb6"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "edgeToEdgeEnabled": true
+      "edgeToEdgeEnabled": true,
+      "package": "com.lorenzoronconi00.Diary"
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -31,6 +48,8 @@
     ],
     "plugins": [
       "expo-font"
-    ]
+    ],
+    "runtimeVersion": "1.0.0",
+    "owner": "lorenzoronconi00"
   }
 }

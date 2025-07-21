@@ -3,9 +3,9 @@ import { Entry, LoginResponse, CreateEntryRequest, Todo, CreateTodoRequest, Albu
 import Constants from 'expo-constants';
 
 const getApiBaseUrl = (): string => {
-  if (__DEV__) {
+  /* if (__DEV__) {
     return 'http://192.168.1.13:3000/api';
-  }
+  } */
 
   return 'https://diary-backend-c2tw.onrender.com/api';
 };
