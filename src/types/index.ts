@@ -1,4 +1,3 @@
-// Frontend types (separati dal backend)
 export interface User {
   id: string;
   name: 'Ilaria' | 'Lorenzo';
@@ -32,7 +31,6 @@ export interface Todo {
   updatedAt?: Date;
 }
 
-// ✨ NUOVO: Interface per Album
 export interface Album {
   _id: string;
   name: string;
@@ -41,8 +39,6 @@ export interface Album {
   createdAt?: Date;
   updatedAt?: Date;
 }
-
-// ✨ NUOVO: Interface per Album Page Content (per uso futuro)
 export interface PageContent {
   type: 'text' | 'image' | 'spotify' | 'sticker';
   content: string;
@@ -92,7 +88,6 @@ export interface PositionedElement {
   };
 }
 
-// ✨ NUOVO: Interface per Album Page (per uso futuro)
 export interface AlbumPage {
   _id: string;
   albumId: string;
@@ -118,7 +113,6 @@ export interface CreateTodoRequest {
   text: string;
 }
 
-// ✨ NUOVO: Request type per Album
 export interface CreateAlbumRequest {
   name: string;
   coverImage: string;
