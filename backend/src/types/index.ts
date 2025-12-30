@@ -1,5 +1,3 @@
-// backend/src/types/index.ts - VERSIONE CORRETTA
-
 import { Types } from 'mongoose';
 
 export interface IUser {
@@ -35,7 +33,6 @@ export interface ITodo {
   updatedAt?: Date;
 }
 
-// ✨ Interface per Album Page Content
 export interface IPageContent {
   type: 'text' | 'image' | 'spotify';
   content: string;
