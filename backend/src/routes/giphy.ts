@@ -34,7 +34,6 @@ interface GiphySearchResponse {
   };
 }
 
-// ✨ Endpoint per cercare sticker
 router.get('/search', async (req: Request, res: Response) => {
   try {
     const { q, limit = 20, offset = 0 } = req.query;
@@ -85,7 +84,6 @@ router.get('/search', async (req: Request, res: Response) => {
   }
 });
 
-// ✨ Endpoint per sticker trending
 router.get('/trending', async (req: Request, res: Response) => {
   try {
     const { limit = 20, offset = 0 } = req.query;
@@ -130,7 +128,6 @@ router.get('/trending', async (req: Request, res: Response) => {
   }
 });
 
-// ✨ Endpoint per categorie predefinite
 router.get('/categories', async (req: Request, res: Response) => {
   try {
     const categories = [
@@ -151,7 +148,6 @@ router.get('/categories', async (req: Request, res: Response) => {
   }
 });
 
-// ✨ Endpoint per debug/test
 router.get('/test', async (req: Request, res: Response) => {
   try {
     const apiKey = process.env.GIPHY_API_KEY;
