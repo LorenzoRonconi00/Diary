@@ -46,7 +46,6 @@ const HomeScreen: React.FC<Props> = ({ navigation, route }) => {
   const [loadingAlbums, setLoadingAlbums] = useState(true);
   const [loadingAlbumCreation, setLoadingAlbumCreation] = useState(false);
 
-  // ✨ NUOVO: Profile popup state
   const [showProfileModal, setShowProfileModal] = useState(false);
 
   const handleLogout = () => {
@@ -156,7 +155,7 @@ const HomeScreen: React.FC<Props> = ({ navigation, route }) => {
       const result = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.Images,
         allowsEditing: true,
-        aspect: [1, 1], // Quadrato per stile polaroid
+        aspect: [1, 1],
         quality: 0.7,
         base64: true,
       });
@@ -224,7 +223,6 @@ const HomeScreen: React.FC<Props> = ({ navigation, route }) => {
     );
   };
 
-  // Carica tutti i dati all'avvio
   useEffect(() => {
     loadTodos();
     loadAlbums();
@@ -293,7 +291,6 @@ const HomeScreen: React.FC<Props> = ({ navigation, route }) => {
               </ScrollView>
             )}
 
-            {/* Scotch image nell'angolo in basso a sinistra */}
             <Image
               source={require('../../assets/scotch.png')}
               style={styles.scotchImage}
@@ -340,7 +337,6 @@ const HomeScreen: React.FC<Props> = ({ navigation, route }) => {
                       resizeMode="contain"
                     />
 
-                    {/* Polaroid con immagine e nome */}
                     <View style={styles.polaroidContainer}>
                       <View style={styles.polaroid}>
                         <Image
@@ -385,7 +381,7 @@ const HomeScreen: React.FC<Props> = ({ navigation, route }) => {
                 style={styles.logoutButton}
                 onPress={() => {
                   setShowProfileModal(false);
-                  setTimeout(handleLogout, 300); // Piccolo delay per animazione
+                  setTimeout(handleLogout, 300);
                 }}
               >
                 <Text style={styles.logoutIcon}>👋</Text>
@@ -396,7 +392,6 @@ const HomeScreen: React.FC<Props> = ({ navigation, route }) => {
         </TouchableOpacity>
       </Modal>
 
-      {/* Modal per aggiungere todo */}
       <Modal
         visible={showTodoModal}
         transparent={true}
@@ -444,7 +439,6 @@ const HomeScreen: React.FC<Props> = ({ navigation, route }) => {
         </View>
       </Modal>
 
-      {/* Modal per aggiungere album */}
       <Modal
         visible={showAlbumModal}
         transparent={true}
@@ -464,7 +458,6 @@ const HomeScreen: React.FC<Props> = ({ navigation, route }) => {
               autoFocus={true}
             />
 
-            {/* Selezione immagine */}
             <TouchableOpacity
               style={styles.imagePickerButton}
               onPress={pickAlbumImage}
@@ -548,7 +541,6 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.55,
     shadowRadius: 4,
-    // ✨ AGGIUNTO: Effetti per indicare che è cliccabile
     borderRadius: 25,
     borderWidth: 2,
     borderColor: 'transparent',
