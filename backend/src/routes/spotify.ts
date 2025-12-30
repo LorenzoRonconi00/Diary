@@ -30,12 +30,11 @@ interface SpotifySearchResponse {
 let cachedToken: string | null = null;
 let tokenExpiry: number | null = null;
 
-// ✨ CORRETTA: Funzione per ottenere il token
 async function getSpotifyToken(): Promise<string> {
   // Controlla se il token è ancora valido
   if (cachedToken && tokenExpiry && Date.now() < tokenExpiry) {
     console.log('🔄 Using cached Spotify token');
-    return cachedToken; // ✅ CORRETTO: qui cachedToken non può essere null
+    return cachedToken;
   }
 
   const clientId = process.env.SPOTIFY_CLIENT_ID;
@@ -51,7 +50,6 @@ async function getSpotifyToken(): Promise<string> {
   }
 
   try {
-    // ✨ COME NEL TUO PYTHON: Base64 encode delle credenziali
     const authString = `${clientId}:${clientSecret}`;
     const authBase64 = Buffer.from(authString).toString('base64');
 
@@ -76,7 +74,7 @@ async function getSpotifyToken(): Promise<string> {
     cachedToken = response.data.access_token;
     tokenExpiry = Date.now() + (response.data.expires_in * 1000) - 60000; // 1 minuto di buffer
 
-    return cachedToken!; // ✅ CORRETTO: qui cachedToken è appena stato assegnato
+    return cachedToken!;
   } catch (error) {
     if (typeof error === 'object' && error !== null && 'response' in error) {
       console.error('❌ Spotify token error:', (error as any).response?.data || (error as any).message);
@@ -94,7 +92,6 @@ async function getSpotifyToken(): Promise<string> {
   }
 }
 
-// ✨ ENDPOINT per testare il token
 router.get('/test-token', async (req: Request, res: Response) => {
   try {
     const token = await getSpotifyToken();
@@ -109,7 +106,6 @@ router.get('/test-token', async (req: Request, res: Response) => {
   }
 });
 
-// ✨ ENDPOINT per cercare tracce
 router.get('/search', async (req: Request, res: Response) => {
   try {
     const { q, limit = 20 } = req.query;
@@ -131,7 +127,7 @@ router.get('/search', async (req: Request, res: Response) => {
           q: q.trim(),
           type: 'track',
           limit: Math.min(Number(limit), 50),
-          market: 'IT', // ✨ AGGIUNGI: Mercato italiano
+          market: 'IT',
         },
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -171,7 +167,6 @@ router.get('/search', async (req: Request, res: Response) => {
   }
 });
 
-// ✨ MANTIENI: Endpoint di debug
 router.get('/debug', async (req: Request, res: Response) => {
   try {
     const clientId = process.env.SPOTIFY_CLIENT_ID;
